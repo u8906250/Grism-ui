@@ -11,3 +11,4 @@ Grism 功能包含 L2-L7層封包過濾、Network tap、Load Balance、packet tu
 在 /data/ftproot 目錄下產生 run.xml 檔案，內容包含所有的設定，再產生 run.xml.ok 檔案即完成設定。如設定檔案執行正確，該目錄下會出現 ok1 檔案，並且會將 run.xml 移到 /data/ftproot/running-config 目錄下，如果執行失敗，該目錄下會出現 ok2 檔案
 
 ## run.xml
+[xml-format.md](xml-format.md)
