@@ -1,6 +1,8 @@
 config.json
 ===========
 
+系統設定檔案，在 /data/ftproot 目錄下會有一份副本，後端可以讀取這的檔案來取得系統的資訊，其中最主要的就是這台機器有哪些介面可以做 input 以及 output
+
 目前會用到的是 interfaces 以及 storages 這兩個項目
 
 interfaces
