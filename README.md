@@ -12,3 +12,7 @@ Grism 功能包含 L2-L7層封包過濾、Network tap、Load Balance、packet tu
 
 ## run.xml
 [xml-format.md](xml-format.md)
+
+## config.json
+系統設定檔案，在 /data/ftproot 目錄下會有一份副本，後端可以讀取這的檔案來取得系統的資訊，其中最主要的就是這台機器有哪些介面可以做 input 以及 output
+[config.md](config.md)
