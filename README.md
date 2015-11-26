@@ -15,3 +15,24 @@ Grism 功能包含 L2-L7層封包過濾、Network tap、Load Balance、packet tu
 
 ## config.json
 [config.md](config.md)
+
+## statistics
+在 /data/ftproot 目錄下，記錄目前所有 input , output 的流量，每5秒會更新一次
+
+其中 port 欄位代表的是 input 的 idx 可參考 config.md 的說明，
+
+example
+```
+port,inErrors,inDrops,inPackets,inBytes,inMbps,outDrops,outPackets,outBytes,outMbps
+0,0,0,3136232,4316017374,58.54,0,0,0,0.00
+1,0,0,0,0,0.00,0,3136232,4316017374,58.54
+2,0,0,0,0,0.00,0,0,0,0.00
+3,0,0,0,0,0.00,0,0,0,0.00
+4,0,0,0,0,0.00,0,0,0,0.00
+5,0,0,0,0,0.00,0,0,0,0.00
+6,0,0,0,0,0.00,0,0,0,0.00
+7,0,0,0,0,0.00,0,0,0,0.00
+8,0,0,0,0,0.00,0,0,0,0.00
+9,0,0,0,0,0.00,0,1662,1071107,0.01
+
+```
