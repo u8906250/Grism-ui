@@ -1,14 +1,14 @@
 config.json
------------
+===========
 
 目前會用到的是 interfaces 以及 storages 這兩個項目
 
 interfaces
-==========
+----------
 取出 ports 裡面 name, speed, idx 參數，name 就是所以可以使用的 port id (除了LOOP type 裡面的port)
 
 storages
-========
+--------
 取出所有 enable 的 name, idx 參數，name 就是所有可以用來寫入pcap檔案的硬碟 id
 
 ```json
