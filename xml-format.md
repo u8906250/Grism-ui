@@ -230,10 +230,10 @@ input packet mix
 <stripping>mpls</stripping>
 <stripping>payload</stripping>
 </action>
-```xml
+```
 
 Chain XML format
----------------------
+----------------
 
 * P0, P1, P2, P3, P4, P5, P6, P7, P8, P9 : port id, start from 0
 * H1, H2 : Hard Disk (only for output)
