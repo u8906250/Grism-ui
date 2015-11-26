@@ -62,7 +62,7 @@ IP Format example
 * 192.168.1.*
 * 192.168.1-10.*
 * 192.168.1.1,2,3,4,5
-* 192.168-170.*.1.2.3.4.5
+* 192.168-170.*.1-5
 
 Port Range Format example
 * 80-443
@@ -112,7 +112,7 @@ Output XML format
 -----------------
 
 output packet process
-可混和 tagging(vlan), stripping(vlan, mpls, payload), maxlen 以及 udpencap or nvgre or pcap 任選一種或都不選
+* 可混和 tagging(vlan), stripping(vlan, mpls, payload), maxlen 以及 udpencap or nvgre or pcap 任選一種或都不選
 
 vlan tagging example
 ```xml
@@ -195,7 +195,7 @@ Action XML format
 ---------------------
 
 input packet process
-可混和 tagging(vlan), stripping(vlan, mpls, payload), maxlen
+* 可混和 tagging(vlan), stripping(vlan, mpls, payload), maxlen
 
 input packet vlanid tagging
 ```xml
