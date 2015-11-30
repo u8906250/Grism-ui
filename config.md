@@ -7,11 +7,11 @@ config.json
 
 interfaces
 ----------
-取出 ports 裡面 name, speed, idx 參數，name 就是所以可以使用的 port id (除了LOOP type 裡面的port)
+取出 ports 裡面 name, speed, idx 參數，name 就是所以可以使用的 port id (除了LOOP type 裡面的port)，speed 為該port的速度通常是1G(1000)或10G(10000)，idx可以對應到 statistics 檔案內容的第一個欄位
 
 storages
 --------
-取出所有 enable 的 name, idx 參數，name 就是所有可以用來寫入pcap檔案的硬碟 id
+取出所有 enable 的 name, idx 參數，name 就是所有可以用來寫入pcap檔案的硬碟 id，idx + interfaces總數(包含LOOP)可以對應到 statistics 檔案內容的第一個欄位
 
 ```json
 {
