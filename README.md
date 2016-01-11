@@ -9,6 +9,11 @@ Grism 功能包含 L2-L7層封包過濾、Network tap、Load Balance、packet tu
 
 可參考現有介面開發 http://grism.ddns.net:8080/grism packetx/packetx，主要有三個頁面，登入頁面、設定頁面、流量頁面
 
+## 開發環境
+ssh/sftp grism.ddns.net 7777 port(對內 22), 帳號密碼 root/xpacketx
+
+http grism.ddns.net 8888 port(對內 80)
+
 #後端
 ## 設定方法
 在 /data/ftproot 目錄下產生 run.xml 檔案，內容包含所有的設定，再產生 run.xml.ok 檔案即完成設定。如設定檔案執行正確，該目錄下會出現 ok1 檔案，並且會將 run.xml 移到 /data/ftproot/running-config 目錄下，如果執行失敗，該目錄下會出現 ok2 檔案
