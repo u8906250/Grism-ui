@@ -47,12 +47,12 @@ port,inErrors,inDrops,inPackets,inBytes,inMbps,outDrops,outPackets,outBytes,outM
 
 #前端
 有參考 Big Tap 的設計 https://www.youtube.com/watch?v=rvz0kwpbEAc&feature=youtu.be
-![polices](dev-doc/grism_ui_policies (1).png)
+![polices](dev-doc/grism_ui_policies.png)
 ---
-![polices new1](dev-doc/grism_ui_policies_new_1 (2).png)
+![polices new1](dev-doc/grism_ui_policies_new_1.png)
 ---
-![polices new2](dev-doc/grism_ui_policies_new_2 (3).png)
+![polices new2](dev-doc/grism_ui_policies_new_2.png)
 ---
-![polices new3](dev-doc/grism_ui_policies_new_3 (4).png)
+![polices new3](dev-doc/grism_ui_policies_new_3.png)
 ---
-![polices new4](dev-doc/grism_ui_policies_new_4 (5).png)
+![polices new4](dev-doc/grism_ui_policies_new_4.png)
