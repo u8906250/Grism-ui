@@ -328,6 +328,11 @@ run.xml example
     <find name="tcp.port" relation="==" content="80" />
 </or>
 </filter>
+<filter id="2" name="2">
+<or>
+    <find name="tcp" relation="" content="" />
+</or>
+</filter>
 <action type="input-packet-process" id="1" name="1">
 <port>P3</port>
 <stripping>vlan</stripping>
@@ -339,7 +344,10 @@ run.xml example
 <chain id="1" name="1">
 <in>P3</in>
 <fid>F1</fid>
-<out>O1</out>
+<next>
+    <fid>F2</fid>
+    <out>O1</out>
+</next>
 </chain>
 </run>
 ```
