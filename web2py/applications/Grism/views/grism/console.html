@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Bootstrap 3, from LayoutIt!</title>
+
+    <meta name="description" content="Source code generated using layoutit.com">
+    <meta name="author" content="LayoutIt!">
+
+    <link href="{{=URL('static', 'css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{=URL('static', 'css/style.css')}}" rel="stylesheet">
+
+    <style>
+        .error {
+            border: 1px solid red
+        }
+
+        .panel-heading {
+            height: 100px;
+        }
+    </style>
+
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <img alt="Bootstrap Image Preview" src="{{=URL('static', 'images/grism.png')}}"/>
+            <br/><br/><br/>
+            <nav class="navbar navbar-default" role="navigation">
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                </div>
+
+            </nav>
+
+            <div class="pull-right btn-right">
+                <button type='button' id="btn_add"
+                        onclick="show_modal()">
+                    <i class="fa fa-plus-square fa-r12"></i>
+                    <span>Add Filter Chain</span>
+                </button>
+
+                <button type="button" id="btn_del" data-toggle="modal"
+                        onclick="show_modal()">
+                    <i class="fa fa-minus-square fa-r12"></i>
+                    <span>Remove Filter Chain</span>
+                </button>
+
+                <button type="button" id="btn_del" data-toggle="modal"
+                        onclick="proc_generate_setting()">
+                    <i class="fa fa-minus-square fa-r12"></i>
+                    <span>Submit</span>
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 id="modal-title" class="modal-title">New Filter Chain</h4>
+                            </div>
+                            <div class="modal-body" style="overflow-y: scroll;">
+                                <p id="confirm_msg"></p>
+
+                                <div id='filter_des' class="form-group">
+                                    <label for="usr">Name:</label>
+                                    <input type="text" class="form-control" id="usr">
+                                    <label for="comment">Comment:</label>
+                                    <textarea class="form-control" rows="5" id="comment"></textarea>
+                                    <button type="button" class="btn btn-primary btn-sm pull-right"
+                                            onclick="show_setting('filter_in')">
+                                        Next
+                                    </button>
+                                </div>
+
+                                <div id='filter_in' class="form-group" style="display: none">
+                                    <button type='button' id="btn_add"
+                                            onclick="show_setting('inport_setting')">
+                                        <i class="fa fa-plus-square fa-r12"></i>
+                                        <span>New</span>
+                                    </button>
+
+                                    <button type="button" id="btn_del" data-toggle="modal"
+                                            onclick="delete_record('inport_table')">
+                                        <i class="fa fa-minus-square fa-r12"></i>
+                                        <span>Delete</span>
+                                    </button>
+
+                                    <table id="inport_table" class="table">
+                                        <thread>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>in ports</th>
+                                                <th>pre-service</th>
+                                            </tr>
+                                        </thread>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+
+                                    <button type="button" class="btn btn-primary btn-sm pull-right"
+                                            onclick="show_setting('filter_in_rules')">
+                                        Next
+                                    </button>
+
+                                    <button type="button" class="btn btn-primary btn-sm pull-right"
+                                            onclick="show_setting('filter_des')">
+                                        back
+                                    </button>
+
+                                </div>
+
+                            {{include 'grism/inport_setting.html'}}
+
+                                <div id='filter_in_rules' class="form-group" style="display: none">
+                                    <button type='button' id="btn_add"
+                                            onclick="show_setting('inport_rule')">
+                                        <i class="fa fa-plus-square fa-r12"></i>
+                                        <span>New</span>
+                                    </button>
+
+                                    <button type="button" id="btn_del" data-toggle="modal"
+                                            onclick="delete_record('in_rule_table')">
+                                        <i class="fa fa-minus-square fa-r12"></i>
+                                        <span>Delete</span>
+                                    </button>
+
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+
+                                    <div class="btn-group-vertical">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="optradio"> And
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="optradio" checked="checked"> Or
+                                        </label>
+                                    </div>
+
+                                    <table id="in_rule_table" class="table">
+                                        <thread>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>name</th>
+                                                <th>relation</th>
+                                                <th>content</th>
+                                            </tr>
+                                        </thread>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+
+                                    <button type="button" class="btn btn-primary btn-sm pull-right"
+                                            onclick="show_setting('filter_out_rules')">
+                                        Next
+                                    </button>
+
+                                    <button type="button" class="btn btn-primary btn-sm pull-right"
+                                            onclick="show_setting('filter_in')">
+                                        back
+                                    </button>
+                                </div>
+
+                            {{include 'grism/inport_rule.html'}}
+
+                                <div id='filter_out_rules' class="form-group" style="display: none">
+                                    <button type='button' id="btn_add"
+                                            onclick="show_setting('outport_rule')">
+                                        <i class="fa fa-plus-square fa-r12"></i>
+                                        <span>New</span>
+                                    </button>
+
+                                    <button type="button" id="btn_del" data-toggle="modal"
+                                            onclick="delete_record('out_rule_table')">
+                                        <i class="fa fa-minus-square fa-r12"></i>
+                                        <span>Delete</span>
+                                    </button>
+
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="btn-group-vertical">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="optradio2"> And
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="optradio2" checked="checked"> Or
+                                        </label>
+                                    </div>
+
+                                    <table id="out_rule_table" class="table">
+                                        <thread>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>name</th>
+                                                <th>relation</th>
+                                                <th>content</th>
+                                            </tr>
+                                        </thread>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+
+                                    <button type="button" class="btn btn-primary btn-sm pull-right"
+                                            onclick="show_setting('filter_out')">
+                                        Next
+                                    </button>
+
+                                    <button type="button" class="btn btn-primary btn-sm pull-right"
+                                            onclick="show_setting('filter_in_rules')">
+                                        back
+                                    </button>
+
+                                </div>
+
+                            {{include 'grism/outport_rule.html'}}
+
+                                <div id='filter_out' class="form-group" style="display: none">
+                                    <button type='button' id="btn_add"
+                                            onclick="show_setting('outport_setting')">
+                                        <i class="fa fa-plus-square fa-r12"></i>
+                                        <span>New</span>
+                                    </button>
+
+                                    <button type="button" id="btn_del" data-toggle="modal"
+                                            onclick="delete_record('outport_table')">
+                                        <i class="fa fa-minus-square fa-r12"></i>
+                                        <span>Delete</span>
+                                    </button>
+
+                                    <div class="btn-group-vertical">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="optradio" checked="checked"> duplicate
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="optradio"> load balance
+                                        </label>
+                                    </div>
+
+                                    <table id="outport_table" class="table">
+                                        <thread>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>out ports</th>
+                                                <th>post-service</th>
+                                            </tr>
+                                        </thread>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+
+                                    <button type="button" class="btn btn-primary btn-sm pull-right"
+                                            onclick="proc_export_setting()">
+                                        submit
+                                    </button>
+
+                                    <button type="button" class="btn btn-primary btn-sm pull-right"
+                                            onclick="show_setting('filter_out_rules')">
+                                        back
+                                    </button>
+
+                                </div>
+
+                            {{include 'grism/outport_setting.html'}}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary pull-left" data-dismiss="modal"
+                                        onclick="javascript: location.reload()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Filter Chains</h3>
+
+        {{for filter_item in filter_list:}}
+            <div class="panel-group" id="panel-{{=filter_item['id']}}">
+                <div id="filter_chains" class="panel panel-default">
+                    <div class="panel-heading">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <td>
+                                <div class="checkbox">
+                                    <label><input class="filter_checkbox" type="checkbox"
+                                                  value="{{=filter_item['id']}}"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <a class="panel-title collapsed" data-toggle="collapse"
+                                   data-parent="#panel-{{=filter_item['id']}}"
+                                   href="#panel-element-{{=filter_item['id']}}">{{=filter_item['name']}}</a>
+                            </td>
+                            <td>
+                            {{=filter_item['des']}}
+                            </td>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="panel-element-{{=filter_item['id']}}" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>in ports</th>
+                                    <th>pre-service</th>
+                                    <th>in rules</th>
+                                    <th>out rules</th>
+                                    <th>out port</th>
+                                    <th>post-service</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <!-- <td>
+                                    <img src="{{=URL('static', 'images/save.png')}}" height="25" width="25">
+                                </td> -->
+
+                                <td>
+                                {{ for key,value in filter_item['in_port'].iteritems(): }}
+                                {{=key}}<br>
+                                {{pass}}
+                                </td>
+                                <td>
+                                {{ for key,value in filter_item['in_port'].iteritems(): }}
+                                {{=value}}<br>
+                                {{pass}}
+                                </td>
+
+                                <td>
+                                {{ for item in filter_item['in_rule']: }}
+                                {{=item}}<br>
+                                {{pass}}
+                                </td>
+
+                                <td>
+                                {{ for item in filter_item['out_rule']: }}
+                                {{=item}}<br>
+                                {{pass}}
+                                </td>
+
+                                <td>
+                                {{ for key,value in filter_item['out_port'].iteritems(): }}
+                                {{=key}}<br>
+                                {{pass}}
+                                </td>
+                                <td>
+                                {{ for key,value in filter_item['out_port'].iteritems(): }}
+                                {{=value}}<br>
+                                {{pass}}
+                                </td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{pass}}
+
+        </div>
+    </div>
+</div>
+<script src="{{=URL('static', 'js/jquery.min.js')}}"></script>
+<script src="{{=URL('static', 'js/bootstrap.min.js')}}"></script>
+<script src="{{=URL('static', 'js/scripts.js')}}"></script>
+<script src="{{=URL('static', 'js/jquery.tabletojson.min.js')}}"></script>
+<script src="{{=URL('static', 'js/jquery-bootalert.js')}}"></script>
+<script>
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        // do something…
+        window.location.reload()
+    });
+
+    var is_checked = {}
+    $('#filter_chains .panel-heading table td').on('click', function () {
+        var ref = $(this).closest('tbody').find('a').attr('href')
+        if (is_checked[ref] == 0 || typeof (is_checked[ref]) === 'undefined') {
+            $(ref).collapse("toggle");
+        }
+    })
+
+    //    $('#filter_chains .panel-heading table td ')
+
+    $('#filter_chains .filter_checkbox').click(function () {
+        var ref = $(this).closest('tbody').find('a').attr('href')
+        if ($(this).prop("checked")) {
+            $(ref).collapse("show");
+            is_checked[ref] = 1
+        }
+        else {
+            $(ref).collapse("hide");
+            is_checked[ref] = 0
+        }
+    })
+
+    $(".dropdown-menu li a").click(function () {
+        $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
+        $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
+
+        if ($(this).text() == 'H1') {
+            $("#dir_setting").show();
+        }
+        else {
+            $("#dir_setting").hide()
+            $("#dir_setting :input:checkbox").attr("checked", false);
+        }
+
+        if ($(this).parents(".dropdown").closest('div[id]').attr('id') == 'outport_setting') {
+            if ($(this).text() == 'P7') {
+                $("#out_setting").show();
+            }
+            else {
+                $("#out_setting").hide();
+            }
+        }
+
+    });
+
+    $('input[type=radio][name=type_status]').change(function () {
+        if (this.value == 'NVGRE') {
+            $('#src_port_form').hide()
+            $('#dest_port_form').hide()
+        }
+        else if (this.value == 'UDP') {
+            $('#src_port_form').show()
+            $('#dest_port_form').show()
+        }
+    });
+
+    delete_record = function (id) {
+        var port = $('#' + id + ' input:checkbox:checked').parents("tr").children(".port").text();
+        if (id == "inport_table" || id == "outport_table") {
+            var list = port.split(" ")
+            list.forEach(function (item) {
+                if (item.toString().trim() != '') {
+                    if (id == "inport_table") {
+                        $('#inport_setting' + ' #' + item.toString()).show()
+                    }
+                    else {
+                        $('#outport_setting' + ' #' + item.toString()).show()
+                    }
+                }
+            })
+        }
+        $('#' + id + ' input:checkbox:checked').parents("tr").remove();
+    }
+
+    proc_generate_setting = function () {
+        if ($('#filter_chains .filter_checkbox:checked').length == 0) {
+            alert('Please Select Filter')
+            return
+        }
+
+//        var filter_id = $('#filter_chains .filter_checkbox:checked').val()
+        var filter_id = []
+        $('#filter_chains .filter_checkbox:checked').each(function (index) {
+            filter_id.push($(this).val())
+        })
+
+        $.ajax({
+            url: '/proc_generate_setting',
+            data: {
+                is_ajax: true,
+                filter: filter_id,
+                rnd: new Date().getTime()
+            },
+            dataType: 'json',
+            type: 'POST',
+            success: function (result) {
+                if (result.error == 0) {
+                    alert(result.content)
+                }
+                else {
+                    alert(result.message)
+                }
+            }
+        })
+    }
+
+    proc_export_setting = function () {
+
+        $('#filter_in').show()
+        $('#filter_in_rules').show()
+        $('#filter_out_rules').show()
+
+        var inport_table = $('#inport_table').tableToJSON();
+        var outport_table = $('#outport_table').tableToJSON();
+        var in_rule_table = $('#in_rule_table').tableToJSON();
+        var out_rule_table = $('#out_rule_table').tableToJSON();
+        var filter_name = $('#filter_des input').val()
+        var filter_des = $('#filter_des textarea').val()
+
+        var in_rule_radio = $('#in_rule_table').parents().children(".radio-inline").children("input:checked").val()
+        var out_rule_radio = $('#out_rule_table').parents().children(".radio-inline").children("input:checked").val()
+
+        $.ajax({
+            url: '/proc_export_setting',
+            data: {
+                is_ajax: true,
+                filter_name: filter_name,
+                filter_des: filter_des,
+                inport_table: JSON.stringify(inport_table),
+                outport_table: JSON.stringify(outport_table),
+                in_rule_table: JSON.stringify(in_rule_table),
+                in_rule: in_rule_radio,
+                out_rule_table: JSON.stringify(out_rule_table),
+                out_rule: out_rule_radio,
+                rnd: new Date().getTime()
+            },
+            dataType: 'json',
+            type: 'POST',
+            success: function (result) {
+                if (result.error == 0) {
+                    alert('Export Success')
+                }
+                else {
+                    alert(result.message)
+                }
+            }
+        })
+        $('#myModal').modal('hide');
+        window.location.reload()
+    }
+
+    reset = function () {
+        $('#filter_des').show()
+        $('#filter_in').hide()
+        $('#filter_in_rules').hide()
+        $('#filter_out_rules').hide()
+        $('#filter_out').hide()
+        $('#inport_setting').hide()
+        $('#outport_setting').hide()
+    }
+
+    show_modal = function () {
+        $('#myModal').modal('show');
+    }
+
+    show_setting = function (id) {
+
+        var title = ''
+        $('#filter_des').hide()
+        $('#filter_in').hide()
+        $('#filter_in_rules').hide()
+        $('#filter_out_rules').hide()
+        $('#filter_out').hide()
+        $('#inport_setting').hide()
+        $('#outport_setting').hide()
+        $('#inport_rule').hide()
+        $('#outport_rule').hide()
+
+        if (id == 'filter_des' || id == 'filter_in' || id == 'filter_in_rules') {
+            title = 'New Filter Chain'
+        }
+        else if (id == 'inport_setting') {
+            title = 'In Ports'
+        }
+        else if (id == 'inport_rule') {
+            title = 'In Rules'
+        }
+        else if (id == 'outport_rule') {
+            title = 'Out Rules'
+        }
+        else if (id == 'filter_out_rules' || id == 'filter_out') {
+            title = 'New outport rules and ports'
+        }
+
+        var div = $(event.target).closest('div[id]')
+        if (div.attr('id') == 'filter_des') {
+            if (div.find('input').val() == '') {
+                div.find('input').addClass('error')
+                $('#filter_des').show()
+                return
+            }
+            else {
+                div.find('input').removeClass('error')
+            }
+        }
+
+        if (div.attr('id') == 'filter_in') {
+            if (id != 'inport_setting') {
+                var rowCount = $('#inport_table tr').length;
+                if (rowCount == 1) {
+                    alert('Please add port setting')
+                    $('#filter_in').show()
+                    return
+                }
+            }
+        }
+
+        if (div.attr('id') == 'filter_in_rules') {
+            if (id != 'inport_rule') {
+                var rowCount = $('#filter_in tr').length;
+                if (rowCount == 1) {
+                    alert('Please add rule setting')
+                    $('#filter_in_rules').show()
+                    return
+                }
+            }
+        }
+
+        if (div.attr('id') == 'filter_out') {
+            if (id != 'outport_setting') {
+                var rowCount = $('#outport_table tr').length;
+                if (rowCount == 1) {
+                    alert('Please add port setting')
+                    $('#filter_out').show()
+                    return
+                }
+            }
+        }
+
+        $('#modal-title').text(title)
+        $('#' + id).show()
+    }
+
+    add_rule_setting = function (id) {
+        var rule = ''
+        var relation = ''
+        var condition = ''
+
+        var check_syntax = '<input type="checkbox" value="">'
+        rule = $('#' + id + ' #rule').text()
+        relation = $('#' + id + ' #relation').text()
+        condition = $('#' + id + ' #condition').val()
+
+        if (id == 'inport_rule') {
+            table_id = 'in_rule_table'
+        }
+        else {
+            table_id = 'out_rule_table'
+        }
+
+        if (rule.trim() != 'Select Rule') {
+            $('#' + table_id + ' > tbody:last-child').append('<tr><td>' + check_syntax + '</td><td>' + rule + '</td><td>' + relation + '</td><td>' + condition + '</td></tr>');
+            reset_rule_selector(id)
+            if (id == 'inport_rule') {
+                show_setting('filter_in_rules')
+            }
+            else {
+                show_setting('filter_out_rules')
+            }
+        }
+        else {
+            alert('Please Select Rule')
+        }
+
+    };
+
+    reset_rule_selector = function (id) {
+        $('#' + id + ' #rule').text('Select Rule')
+        $('#' + id + ' #relation').text('==')
+        $('#' + id + ' #condition').val('')
+    }
+
+    add_port_setting = function (id) {
+
+        var port = '';
+        var service = '';
+        var list = [];
+        port = $('#' + id + ' #port_num').text()
+
+        if (id == 'inport_setting') {
+            $('#' + id + ' :input:checkbox').each(function () {
+                if ($(this).prop("checked")) {
+                    var res = $(this).closest('label').text();
+                    if (res == 'vlan tagging') {
+                        res = res.toString() + ':' + $('#' + id + " #vlan_tag").val()
+                    }
+
+                    if (res == 'packet stripping') {
+                        res = res.toString() + ':' + $('#' + id + " #packet").val()
+                    }
+
+                    if (res == 'directory (bytes)') {
+                        res = res.toString() + ':' + $('#' + id + " #directory").val()
+                    }
+
+                    list.push(res)
+                }
+            });
+        }
+        else {
+            $('#' + id + ' :input:checkbox').each(function () {
+                if ($(this).prop("checked")) {
+                    var res = $(this).closest('label').text();
+                    if (res == 'vlan tagging') {
+                        res = res.toString() + ':' + $('#' + id + " #vlan_tag").val()
+                    }
+
+                    if (res == 'packet stripping') {
+                        res = res.toString() + ':' + $('#' + id + " #packet").val()
+                    }
+                    list.push(res)
+                }
+            });
+
+            if (port.trim() == 'P7') {
+                list.push($('#out_setting').children(".radio-inline").children("input:checked").val())
+                list.push('destination ip' + ':' + $('#' + id + ' #dest_ip').val())
+                if ($('#out_setting').children(".radio-inline").children("input:checked").val().trim() == 'UDP') {
+                    list.push('source port' + ':' + $('#' + id + ' #src_port').val())
+                    list.push('destination port' + ':' + $('#' + id + ' #dest_port').val())
+                }
+            }
+        }
+
+        list.forEach(function (item) {
+            if (service == '') {
+                service = item
+            }
+            else {
+                service += '\\<br>' + item
+            }
+        })
+
+        var check_syntax = '<input type="checkbox" value="">'
+
+        if (id == 'inport_setting') {
+            table_id = 'inport_table'
+        }
+        else {
+            table_id = 'outport_table'
+        }
+
+        if (port.trim() != 'Select Port') {
+            $('#' + table_id + ' > tbody:last-child').append('<tr><td class="check">' + check_syntax + '</td><td class="port">' + port + '</td><td class="service">' + service + '</td></tr>');
+            $('#' + id + ' #' + port).hide()
+            reset_selector(id)
+
+            if (id == 'inport_setting') {
+                show_setting('filter_in')
+            }
+            else {
+                show_setting('filter_out')
+            }
+        }
+        else {
+            alert('Please Select Port')
+        }
+    };
+
+    reset_selector = function (id) {
+        $('#' + id + ' :input:checkbox').each(function () {
+            $(this).prop("checked", false)
+        })
+        $('#' + id + ' #port_num').text('Select Port')
+        $('#' + id + ' #out_setting').hide()
+    }
+
+</script>
+</body>
+</html>

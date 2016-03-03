@@ -1,0 +1,57 @@
+timestamp: 2016-03-03T20:48:45.114201
+CREATE TABLE users(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_name CHAR(512),
+    create_time TIMESTAMP
+);
+success!
+timestamp: 2016-03-03T20:48:45.118276
+CREATE TABLE filters(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    filter_name CHAR(512),
+    status INTEGER,
+    user_id INTEGER,
+    description CHAR(512),
+    create_time TIMESTAMP
+);
+success!
+timestamp: 2016-03-03T20:48:45.122272
+CREATE TABLE input_port(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    filter_id INTEGER,
+    in_port CHAR(512),
+    pre_service CHAR(512),
+    create_time TIMESTAMP
+);
+success!
+timestamp: 2016-03-03T20:48:45.126560
+CREATE TABLE input_rules(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    filter_id INTEGER,
+    name CHAR(512),
+    relation CHAR(512),
+    rule_content CHAR(512),
+    rule_relation CHAR(512),
+    create_time TIMESTAMP
+);
+success!
+timestamp: 2016-03-03T20:48:45.130338
+CREATE TABLE out_port(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    filter_id INTEGER,
+    out_port CHAR(512),
+    post_service CHAR(512),
+    create_time TIMESTAMP
+);
+success!
+timestamp: 2016-03-03T20:48:45.134215
+CREATE TABLE output_rules(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    filter_id INTEGER,
+    name CHAR(512),
+    relation CHAR(512),
+    rule_content CHAR(512),
+    rule_relation CHAR(512),
+    create_time TIMESTAMP
+);
+success!

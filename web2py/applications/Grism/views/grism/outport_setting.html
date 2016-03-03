@@ -1,0 +1,85 @@
+<div id='outport_setting' class="form-group" style="display: none">
+    <div class="dropdown">
+        <button id="port_num" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="true">
+            Select Port
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <!-- dropdown menu links -->
+            <li id="P1"><a>P0</a></li>
+            <li id="P1"><a>P1</a></li>
+            <li id="P2"><a>P2</a></li>
+            <li id="P3"><a>P3</a></li>
+            <li id="P4"><a>P4</a></li>
+            <li id="P5"><a>P5</a></li>
+            <li id="P6"><a>P6</a></li>
+            <li id="P7"><a>P7</a></li>
+            <li id="H1"><a>H1</a></li>
+        </ul>
+    </div>
+
+    <h4>post-service:</h4>
+
+    <div class="checkbox">
+        <form class="form-inline">
+            <div class="form-group"><label><input type="checkbox" value="1">vlan tagging</label></div>
+            <div class="form-group">
+                <input type="text"
+                       class="form-control" id="vlan_tag" style="width: 100px"></div>
+        </form>
+    </div>
+
+    <div class="checkbox">
+        <label><input type="checkbox" value="2">vlan stripping</label>
+    </div>
+    <div class="checkbox disabled">
+        <label><input type="checkbox" value="3">mpls stripping</label>
+    </div>
+    <div class="checkbox disabled">
+        <label><input type="checkbox" value="4">TCP/UDP payload
+            stripping</label>
+    </div>
+    <div class="checkbox disabled">
+        <form class="form-inline">
+            <div class="form-group"><label><input type="checkbox" value="5">packet stripping</label></div>
+            <div class="form-group">
+                <input type="text"
+                       class="form-control" id="packet" style="width: 100px"></div>
+        </form>
+    </div>
+
+    <div class="checkbox disabled">
+        <label><input type="checkbox" value="6">encapsulation</label>
+    </div>
+
+    <div id="out_setting" style="display: none">
+        <label class="radio-inline"><input id="UDP" type="radio" name="type_status" checked="checked"
+                                           value="UDP">UDP</label>
+        <label class="radio-inline"><input id="NVGRE" type="radio" name="type_status" value="NVGRE">NVGRE</label>
+
+        <div>
+            <form class="form-inline" id="dest_ip_from">
+                <div class="form-group"><label>destination ip: </label></div>
+                <div class="form-group"><input type="text" class="form-control" id="dest_ip"></div>
+            </form>
+
+            <form class="form-inline" id="src_port_form">
+                <div class="form-group"><label>source port: </label></div>
+                <div class="form-group"><input type="text" class="form-control" id="src_port">
+                </div>
+            </form>
+
+            <form class="form-inline" id="dest_port_form">
+                <div class="form-group"><label>destination port: </label></div>
+                <div class="form-group"><input type="text" class="form-control"
+                                               id="dest_port"></div>
+            </form>
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary btn-sm pull-right"
+            onclick="add_port_setting('outport_setting')">
+        done
+    </button>
+</div>

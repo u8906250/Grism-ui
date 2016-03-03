@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<run><action id="1" name="1" type="input-packet-process"><port>P2</port><stripping>vlan stripping</stripping></action><filter id="1" name="1"><or><find content="ddd" name="eth.src" relation="==" /></or></filter><output id="1" name="1" type="mix"><port>P5</port><stripping>TCP/UDP payload stripping</stripping></output><chain id="1" name="1"><in>P3</in><fid>F1</fid><out>01</out></chain></run>
