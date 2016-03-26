@@ -1,11 +1,11 @@
-timestamp: 2016-03-03T20:48:45.114201
+timestamp: 2016-03-22T06:24:14.866095
 CREATE TABLE users(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_name CHAR(512),
     create_time TIMESTAMP
 );
 success!
-timestamp: 2016-03-03T20:48:45.118276
+timestamp: 2016-03-22T06:24:14.870059
 CREATE TABLE filters(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     filter_name CHAR(512),
@@ -15,7 +15,7 @@ CREATE TABLE filters(
     create_time TIMESTAMP
 );
 success!
-timestamp: 2016-03-03T20:48:45.122272
+timestamp: 2016-03-22T06:24:14.873226
 CREATE TABLE input_port(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     filter_id INTEGER,
@@ -24,7 +24,7 @@ CREATE TABLE input_port(
     create_time TIMESTAMP
 );
 success!
-timestamp: 2016-03-03T20:48:45.126560
+timestamp: 2016-03-22T06:24:14.876966
 CREATE TABLE input_rules(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     filter_id INTEGER,
@@ -35,19 +35,29 @@ CREATE TABLE input_rules(
     create_time TIMESTAMP
 );
 success!
-timestamp: 2016-03-03T20:48:45.130338
-CREATE TABLE out_port(
+timestamp: 2016-03-22T06:24:14.880458
+CREATE TABLE out_policy(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     filter_id INTEGER,
-    out_port CHAR(512),
-    post_service CHAR(512),
     create_time TIMESTAMP
 );
 success!
-timestamp: 2016-03-03T20:48:45.134215
+timestamp: 2016-03-22T06:24:14.884055
+CREATE TABLE out_port(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    filter_id INTEGER,
+    policy_id INTEGER,
+    out_port CHAR(512),
+    post_service CHAR(512),
+    out_type CHAR(512),
+    create_time TIMESTAMP
+);
+success!
+timestamp: 2016-03-22T06:24:14.888608
 CREATE TABLE output_rules(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     filter_id INTEGER,
+    policy_id INTEGER,
     name CHAR(512),
     relation CHAR(512),
     rule_content CHAR(512),

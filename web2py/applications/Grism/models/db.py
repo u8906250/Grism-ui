@@ -117,22 +117,21 @@ db.define_table('input_rules',
                 Field('rule_relation', 'string'),
                 Field('create_time', 'datetime', default=request.now))
 
-db.define_table('out_port',
+db.define_table('out_policy',
                 Field('filter_id', 'integer'),
-                Field('out_port', 'string'),
-                Field('post_service', 'string'),
                 Field('create_time', 'datetime', default=request.now))
 
-# db.define_table('rules',
-#                 Field('filter_id', 'integer'),
-#                 Field('name', 'string'),
-#                 Field('relation', 'string'),
-#                 Field('rule_content', 'string'),
-#                 Field('rule_relation', 'string'),
-#                 Field('create_time', 'datetime', default=request.now))
+db.define_table('out_port',
+                Field('filter_id', 'integer'),
+                Field('policy_id', 'integer'),
+                Field('out_port', 'string'),
+                Field('post_service', 'string'),
+                Field('out_type', 'string'),
+                Field('create_time', 'datetime', default=request.now))
 
 db.define_table('output_rules',
                 Field('filter_id', 'integer'),
+                Field('policy_id', 'integer'),
                 Field('name', 'string'),
                 Field('relation', 'string'),
                 Field('rule_content', 'string'),

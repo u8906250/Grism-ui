@@ -46,7 +46,7 @@
                 </button>
 
                 <button type="button" id="btn_del" data-toggle="modal"
-                        onclick="show_modal()">
+                        onclick="proc_del_filter()">
                     <i class="fa fa-minus-square fa-r12"></i>
                     <span>Remove Filter Chain</span>
                 </button>
@@ -55,6 +55,12 @@
                         onclick="proc_generate_setting()">
                     <i class="fa fa-minus-square fa-r12"></i>
                     <span>Submit</span>
+                </button>
+
+                <button type="button" id="btn_del" data-toggle="modal"
+                        onclick="proc_logout()">
+                    <i class="fa fa-minus-square fa-r12"></i>
+                    <span>Logout</span>
                 </button>
 
                 <!-- Modal -->
@@ -92,13 +98,13 @@
                                     </button>
 
                                     <table id="inport_table" class="table">
-                                        <thread>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>in ports</th>
-                                                <th>pre-service</th>
-                                            </tr>
-                                        </thread>
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>in ports</th>
+                                            <th>pre-service</th>
+                                        </tr>
+                                        </thead>
                                         <tbody>
                                         </tbody>
                                     </table>
@@ -142,20 +148,20 @@
                                     </div>
 
                                     <table id="in_rule_table" class="table">
-                                        <thread>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>name</th>
-                                                <th>relation</th>
-                                                <th>content</th>
-                                            </tr>
-                                        </thread>
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>name</th>
+                                            <th>relation</th>
+                                            <th>content</th>
+                                        </tr>
+                                        </thead>
                                         <tbody>
                                         </tbody>
                                     </table>
 
                                     <button type="button" class="btn btn-primary btn-sm pull-right"
-                                            onclick="show_setting('filter_out_rules')">
+                                            onclick="show_setting('out_policy')">
                                         Next
                                     </button>
 
@@ -166,6 +172,42 @@
                                 </div>
 
                             {{include 'grism/inport_rule.html'}}
+
+                                <div id='out_policy' class="form-group" style="display: none">
+                                    <button type='button' id="btn_add"
+                                            onclick="show_setting('filter_out_rules')">
+                                        <i class="fa fa-plus-square fa-r12"></i>
+                                        <span>New</span>
+                                    </button>
+
+                                    <button type="button" id="btn_del" data-toggle="modal"
+                                            onclick="delete_record('out_policy_table')">
+                                        <i class="fa fa-minus-square fa-r12"></i>
+                                        <span>Delete</span>
+                                    </button>
+
+                                    <table id="out_policy_table" class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>outports policy</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+
+                                    <button type="button" class="btn btn-primary btn-sm pull-right"
+                                            onclick="proc_export_setting()">
+                                        submit
+                                    </button>
+
+                                    <button type="button" class="btn btn-primary btn-sm pull-right"
+                                            onclick="show_setting('filter_in_rules')">
+                                        back
+                                    </button>
+
+                                </div>
 
                                 <div id='filter_out_rules' class="form-group" style="display: none">
                                     <button type='button' id="btn_add"
@@ -191,14 +233,14 @@
                                     </div>
 
                                     <table id="out_rule_table" class="table">
-                                        <thread>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>name</th>
-                                                <th>relation</th>
-                                                <th>content</th>
-                                            </tr>
-                                        </thread>
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>name</th>
+                                            <th>relation</th>
+                                            <th>content</th>
+                                        </tr>
+                                        </thead>
                                         <tbody>
                                         </tbody>
                                     </table>
@@ -232,11 +274,40 @@
 
                                     <div class="btn-group-vertical">
                                         <label class="radio-inline">
-                                            <input type="radio" name="optradio" checked="checked"> duplicate
+                                            <input type="radio" class="out_type_radio" name="optradio3"
+                                                   checked="checked" value="1"> duplicate
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="optradio"> load balance
+                                            <input type="radio" class="out_type_radio" name="optradio3" value="2"> load
+                                            balance
                                         </label>
+                                    </div>
+
+                                    <div class="btn-group-vertical">
+                                        <div class="form-group dropdown">
+                                            <button id="out_rule"
+                                                    class="btn btn-primary btn-xs dropdown-toggle disabled"
+                                                    type="button"
+                                                    data-toggle="dropdown"
+                                                    aria-haspopup="true"
+                                                    aria-expanded="true"
+                                                    style="width: 70%; height: 50%; margin-left: 30px; margin-bottom: -10px;">
+                                                Select Rule
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <!-- dropdown menu links -->
+                                                <li><a>session</a></li>
+                                                <li><a>ethtype</a></li>
+                                                <li><a>iptype</a></li>
+                                                <li><a>smac</a></li>
+                                                <li><a>dmac</a></li>
+                                                <li><a>sip</a></li>
+                                                <li><a>dip</a></li>
+                                                <li><a>rr</a></li>
+                                                <li><a>5thash</a></li>
+                                            </ul>
+                                        </div>
                                     </div>
 
                                     <table id="outport_table" class="table">
@@ -252,8 +323,8 @@
                                     </table>
 
                                     <button type="button" class="btn btn-primary btn-sm pull-right"
-                                            onclick="proc_export_setting()">
-                                        submit
+                                            onclick="add_out_policy()">
+                                        next
                                     </button>
 
                                     <button type="button" class="btn btn-primary btn-sm pull-right"
@@ -293,8 +364,14 @@
                             <tbody>
                             <td>
                                 <div class="checkbox">
-                                    <label><input class="filter_checkbox" type="checkbox"
-                                                  value="{{=filter_item['id']}}"></label>
+                                    <label>
+                                    {{ if (filter_item['status']):}}
+                                        <input class="filter_checkbox" type="checkbox" checked="checked"
+                                               value="{{=filter_item['id']}}">
+                                    {{else:}}
+                                        <input class="filter_checkbox" type="checkbox" value="{{=filter_item['id']}}">
+                                    {{pass}}
+                                    </label>
                                 </div>
                             </td>
                             <td>
@@ -316,9 +393,11 @@
                                     <th>in ports</th>
                                     <th>pre-service</th>
                                     <th>in rules</th>
-                                    <th>out rules</th>
+                                    <th>out policy</th>
+                                    <!--
                                     <th>out port</th>
                                     <th>post-service</th>
+                                    -->
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -345,21 +424,31 @@
                                 </td>
 
                                 <td>
-                                {{ for item in filter_item['out_rule']: }}
-                                {{=item}}<br>
-                                {{pass}}
+                                    <table class="table">
+                                    {{ for key, value in filter_item['out_policy'].iteritems():}}
+                                        <tr>
+                                            <td>
+                                            {{ for rule_value in value['out_rule']:}}
+                                            {{=rule_value}}<br>
+                                            {{pass}}
+                                            </td>
+                                            <td>
+                                            <td>
+                                            {{ for port_key, port_value in value['out_port'].iteritems():}}
+                                            {{=port_key}}<br>
+                                            {{pass}}
+                                            </td>
+                                            <td>
+                                            {{ for port_key, port_value in value['out_port'].iteritems():}}
+                                            {{=port_value}}<br>
+                                            {{pass}}
+                                            </td>
+                                            <td>{{=value['out_type']}}</td>
+                                        </tr>
+                                    {{pass}}
+                                    </table>
                                 </td>
 
-                                <td>
-                                {{ for key,value in filter_item['out_port'].iteritems(): }}
-                                {{=key}}<br>
-                                {{pass}}
-                                </td>
-                                <td>
-                                {{ for key,value in filter_item['out_port'].iteritems(): }}
-                                {{=value}}<br>
-                                {{pass}}
-                                </td>
                                 </tbody>
                             </table>
                         </div>
@@ -382,6 +471,37 @@
         // do something…
         window.location.reload()
     });
+
+    $('.out_type_radio').change(function () {
+        var out_type = $('.out_type_radio:checked').attr('value')
+        if (out_type == '1') {
+            $('#out_rule').addClass('disabled')
+        }
+        else {
+            $('#out_rule').removeClass('disabled')
+        }
+    });
+
+    proc_logout = function () {
+        $.ajax({
+            url: '/proc_logout',
+            data: {
+                is_ajax: true,
+                rnd: new Date().getTime()
+            },
+            dataType: 'json',
+            type: 'POST',
+            success: function (result) {
+                if (result.error == 0) {
+                    alert("Log out Finish") ? "" : location.reload();
+//                    window.location.href('');
+                }
+                else {
+                    alert(result.message)
+                }
+            }
+        })
+    };
 
     var is_checked = {}
     $('#filter_chains .panel-heading table td').on('click', function () {
@@ -463,7 +583,6 @@
             return
         }
 
-//        var filter_id = $('#filter_chains .filter_checkbox:checked').val()
         var filter_id = []
         $('#filter_chains .filter_checkbox:checked').each(function (index) {
             filter_id.push($(this).val())
@@ -480,7 +599,38 @@
             type: 'POST',
             success: function (result) {
                 if (result.error == 0) {
-                    alert(result.content)
+                    alert("Create Setting Success") ? "" : location.reload();
+                }
+                else {
+                    alert(result.message)
+                }
+            }
+        })
+    }
+
+    proc_del_filter = function () {
+        if ($('#filter_chains .filter_checkbox:checked').length == 0) {
+            alert('Please Select Filter')
+            return
+        }
+
+        var filter_id = []
+        $('#filter_chains .filter_checkbox:checked').each(function (index) {
+            filter_id.push($(this).val())
+        })
+
+        $.ajax({
+            url: '/proc_del_filter',
+            data: {
+                is_ajax: true,
+                filter: filter_id,
+                rnd: new Date().getTime()
+            },
+            dataType: 'json',
+            type: 'POST',
+            success: function (result) {
+                if (result.error == 0) {
+                    alert("Delete Setting Success") ? "" : location.reload();
                 }
                 else {
                     alert(result.message)
@@ -496,14 +646,30 @@
         $('#filter_out_rules').show()
 
         var inport_table = $('#inport_table').tableToJSON();
-        var outport_table = $('#outport_table').tableToJSON();
         var in_rule_table = $('#in_rule_table').tableToJSON();
+
+        var outport_table = $('#outport_table').tableToJSON();
         var out_rule_table = $('#out_rule_table').tableToJSON();
+
+//        var out_policy_table = $('#out_policy_table').tableToJSON();
+        var out_policy_table = [];
+        $('#out_policy_table table').each(function () {
+            out_policy_table.push($(this).tableToJSON())
+        });
+
         var filter_name = $('#filter_des input').val()
         var filter_des = $('#filter_des textarea').val()
 
-        var in_rule_radio = $('#in_rule_table').parents().children(".radio-inline").children("input:checked").val()
-        var out_rule_radio = $('#out_rule_table').parents().children(".radio-inline").children("input:checked").val()
+        var in_rule_radio = $('#filter_in_rules').children(".btn-group-vertical").find("input[name=optradio]:checked").closest('.radio-inline').text()
+
+//        var out_rule_radio = $('#filter_out_rules').children(".btn-group-vertical").find("input[name=optradio2]:checked").closest('.radio-inline').text()
+//
+//        var out_type = $('.out_type_radio:checked').attr('value')
+//        var out_type_balance = ''
+//
+//        if (out_type == 2) {
+//            out_type_balance = $('#out_rule').text()
+//        }
 
         $.ajax({
             url: '/proc_export_setting',
@@ -512,11 +678,13 @@
                 filter_name: filter_name,
                 filter_des: filter_des,
                 inport_table: JSON.stringify(inport_table),
-                outport_table: JSON.stringify(outport_table),
+//                outport_table: JSON.stringify(outport_table),
                 in_rule_table: JSON.stringify(in_rule_table),
-                in_rule: in_rule_radio,
-                out_rule_table: JSON.stringify(out_rule_table),
-                out_rule: out_rule_radio,
+                in_rule: in_rule_radio.trim(),
+//                out_rule_table: JSON.stringify(out_rule_table),
+                out_policy_table: JSON.stringify(out_policy_table),
+//                out_rule: out_rule_radio.trim(),
+//                out_type: out_type_balance.trim(),
                 rnd: new Date().getTime()
             },
             dataType: 'json',
@@ -560,12 +728,16 @@
         $('#outport_setting').hide()
         $('#inport_rule').hide()
         $('#outport_rule').hide()
+        $('#out_policy').hide()
 
-        if (id == 'filter_des' || id == 'filter_in' || id == 'filter_in_rules') {
+        if (id == 'filter_des') {
             title = 'New Filter Chain'
         }
-        else if (id == 'inport_setting') {
+        else if (id == 'filter_in') {
             title = 'In Ports'
+        }
+        else if (id == 'filter_in_rules' || id == 'filter_in') {
+            title = 'In Rules'
         }
         else if (id == 'inport_rule') {
             title = 'In Rules'
@@ -612,7 +784,7 @@
         }
 
         if (div.attr('id') == 'filter_out') {
-            if (id != 'outport_setting') {
+            if (id != 'outport_setting' && id != 'filter_out_rules') {
                 var rowCount = $('#outport_table tr').length;
                 if (rowCount == 1) {
                     alert('Please add port setting')
@@ -644,7 +816,13 @@
         }
 
         if (rule.trim() != 'Select Rule') {
-            $('#' + table_id + ' > tbody:last-child').append('<tr><td>' + check_syntax + '</td><td>' + rule + '</td><td>' + relation + '</td><td>' + condition + '</td></tr>');
+            if (id == 'inport_rule') {
+                class_name = 'in_rule_class'
+            }
+            else {
+                class_name = 'out_rule_class'
+            }
+            $('#' + table_id + ' > tbody:last-child').append('<tr class="' + class_name + '"><td class="check">' + check_syntax + '</td><td>' + rule + '</td><td>' + relation + '</td><td>' + condition + '</td></tr>');
             reset_rule_selector(id)
             if (id == 'inport_rule') {
                 show_setting('filter_in_rules')
@@ -663,6 +841,54 @@
         $('#' + id + ' #rule').text('Select Rule')
         $('#' + id + ' #relation').text('==')
         $('#' + id + ' #condition').val('')
+    }
+
+    add_out_policy = function () {
+
+        var check_syntax = '<input type="checkbox" value="">'
+        var rule_syntx = ''
+        var port_syntax = ''
+
+        $('.out_rule_class').each(function () {
+            if (rule_syntx == '') {
+                rule_syntx = $(this).children('td[class!=check]')[0].textContent + $(this).children('td[class!=check]')[1].textContent + $(this).children('td[class!=check]')[2].textContent
+            }
+            else {
+                rule_syntx += '\\<br>' + $(this).children('td[class!=check]')[0].textContent + $(this).children('td[class!=check]')[1].textContent + $(this).children('td[class!=check]')[2].textContent
+            }
+        })
+
+        $('.out_setting_class').each(function () {
+            if (port_syntax == '') {
+                port_syntax = $(this).children('td[class!=check]')[0].textContent + $(this).children('td[class!=check]')[1].textContent
+            }
+            else {
+                port_syntax += '\\<br>' + $(this).children('td[class!=check]')[0].textContent + $(this).children('td[class!=check]')[1].textContent
+            }
+        })
+
+        var out_rule_radio = $('#filter_out_rules').children(".btn-group-vertical").find("input[name=optradio2]:checked").closest('.radio-inline').text()
+
+        var out_type = $('.out_type_radio:checked').attr('value')
+        var out_type_balance = ''
+
+        if (out_type == 2) {
+            out_type_balance = $('#out_rule').text()
+        }
+        else{
+            out_type_balance = 'duplicate'
+        }
+
+        var policy = '<table class="table table-bordered"><thead><tr><th>outport rule</th><th>rule relation</th><th>outport setting</th><th>out type</th></tr></thead><tbody><tr><td>' + rule_syntx + '</td><td>' + out_rule_radio + '</td><td>' + port_syntax + '</td><td>' + out_type_balance + '</td></tr></tbody></table>'
+        $('#out_policy_table > tbody:last-child').append('<tr><td class="check">' + check_syntax + '</td><td class="policy">' + policy + '</td></tr>');
+
+        show_setting('out_policy')
+        reset_rule_selector('outport_rule')
+        reset_selector('outport_setting')
+        $('#outport_setting li').show()
+
+        $('.out_setting_class').remove()
+        $('.out_rule_class').remove()
     }
 
     add_port_setting = function (id) {
@@ -730,13 +956,15 @@
 
         if (id == 'inport_setting') {
             table_id = 'inport_table'
+            class_name = 'in_setting_class'
         }
         else {
             table_id = 'outport_table'
+            class_name = 'out_setting_class'
         }
 
         if (port.trim() != 'Select Port') {
-            $('#' + table_id + ' > tbody:last-child').append('<tr><td class="check">' + check_syntax + '</td><td class="port">' + port + '</td><td class="service">' + service + '</td></tr>');
+            $('#' + table_id + ' > tbody:last-child').append('<tr class="' + class_name + '"><td class="check">' + check_syntax + '</td><td class="port">' + port + '</td><td class="service">' + service + '</td></tr>');
             $('#' + id + ' #' + port).hide()
             reset_selector(id)
 
