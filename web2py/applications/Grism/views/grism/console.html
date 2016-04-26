@@ -190,7 +190,7 @@
                                         <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>outports policy</th>
+                                            <th></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -736,17 +736,20 @@
         else if (id == 'filter_in') {
             title = 'In Ports'
         }
-        else if (id == 'filter_in_rules' || id == 'filter_in') {
-            title = 'In Rules'
+        else if (id == 'filter_in_rules' || id == 'filter_in' || id == 'inport_rule' || id == 'outport_rule') {
+            title = 'New Rules'
         }
-        else if (id == 'inport_rule') {
-            title = 'In Rules'
-        }
-        else if (id == 'outport_rule') {
+        else if (id == 'filter_out_rules') {
             title = 'Out Rules'
         }
-        else if (id == 'filter_out_rules' || id == 'filter_out') {
-            title = 'New outport rules and ports'
+        else if (id == 'filter_out'){
+            title = 'Out Ports'
+        }
+        else if (id == 'out_policy'){
+            title = 'New Out Rules and Ports'
+        }
+        else if (id == 'inport_setting'){
+            title = 'New In Port'
         }
 
         var div = $(event.target).closest('div[id]')
@@ -863,7 +866,7 @@
                 port_syntax = $(this).children('td[class!=check]')[0].textContent + $(this).children('td[class!=check]')[1].textContent
             }
             else {
-                port_syntax += '\\<br>' + $(this).children('td[class!=check]')[0].textContent + $(this).children('td[class!=check]')[1].textContent
+                port_syntax += '\\\\<br>' + $(this).children('td[class!=check]')[0].textContent + $(this).children('td[class!=check]')[1].textContent
             }
         })
 
@@ -873,13 +876,13 @@
         var out_type_balance = ''
 
         if (out_type == 2) {
-            out_type_balance = $('#out_rule').text()
+            out_type_balance = 'loadbalance:' + $('#out_rule').text()
         }
         else{
             out_type_balance = 'duplicate'
         }
 
-        var policy = '<table class="table table-bordered"><thead><tr><th>outport rule</th><th>rule relation</th><th>outport setting</th><th>out type</th></tr></thead><tbody><tr><td>' + rule_syntx + '</td><td>' + out_rule_radio + '</td><td>' + port_syntax + '</td><td>' + out_type_balance + '</td></tr></tbody></table>'
+        var policy = '<table class="table table-bordered"><thead><tr><th>out rules</th><th>rule relation</th><th>out ports and post-service</th><th>out type</th></tr></thead><tbody><tr><td>' + rule_syntx + '</td><td>' + out_rule_radio + '</td><td>' + port_syntax + '</td><td>' + out_type_balance + '</td></tr></tbody></table>'
         $('#out_policy_table > tbody:last-child').append('<tr><td class="check">' + check_syntax + '</td><td class="policy">' + policy + '</td></tr>');
 
         show_setting('out_policy')

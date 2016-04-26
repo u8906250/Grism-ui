@@ -53,7 +53,11 @@ def console():
             out_ports = db(db.out_port.policy_id==policy_id).select(db.out_port.ALL)
             for out_port in out_ports:
                 out_ports_list[out_port.out_port] = out_port.post_service
-                out_type = 'loadBalance ' +out_port.out_type if out_port.out_type else 'duplicate'
+                if out_port.out_type == 'duplicate':
+                    out_type = out_port.out_type
+                else:
+                    out_type = 'loadBalance ' +out_port.out_type
+
             filters['out_policy'][policy_id]['out_port'] = out_ports_list.copy()
             filters['out_policy'][policy_id]['out_type'] = out_type
 
@@ -131,12 +135,12 @@ def proc_export_setting():
         for policy in out_policy_table:
 
             policy_id = db.out_policy.insert(filter_id=filter_id)
-            rule_list = policy[0]['outport rule']
-            setting_list = policy[0]['outport setting']
+            rule_list = policy[0]['out rules']
+            setting_list = policy[0]['out ports and post-service']
             out_type = policy[0]['out type']
             rule_relation = policy[0]['rule relation']
 
-            for setting in setting_list.split('\\'):
+            for setting in setting_list.split('\\\\'):
                 port = setting.split(' ', 1)[0]
                 service = setting.split(' ', 1)[1]
                 db.out_port.insert(filter_id=filter_id,
@@ -175,7 +179,11 @@ def proc_generate_setting():
     root = ET.Element("run")
 
     err_msg = ''
-    filter_id_list = request.vars['filter[]']
+    filter_id_list = list()
+    if isinstance(request.vars['filter[]'], list):
+        filter_id_list = request.vars['filter[]']
+    else:
+        filter_id_list.append(request.vars['filter[]'])
 
     in_rule_idx = 0
     out_rule_idx_list = dict()
@@ -190,7 +198,8 @@ def proc_generate_setting():
         out_policy = db(db.out_policy.filter_id==filter_id).select(db.out_policy.ALL)
 
         for port in in_ports:
-            action = ET.SubElement(root, 'action', type="input-packet-process", id=str(port['id']), name=str(port['id']))
+            if port['pre_service']:
+                action = ET.SubElement(root, 'action', type="input-packet-process", id=str(port['id']), name=str(port['id']))
             ET.SubElement(action, "port").text = port['in_port']
             for service in port['pre_service'].split('\\'):
                 if service.find('vlan tagging') >= 0:
@@ -298,6 +307,9 @@ def proc_generate_setting():
                 if out_type == 'duplicate':
                     ET.SubElement(next, "out", type=out_type).text = chain_out_port
                 else:
+                    if 'loadbalance' in out_type:
+                        out_type=out_type.split(':')[1]
+
                     ET.SubElement(next, "out", type='loadBalance', lbtype=out_type).text = chain_out_port
                 chain_out_port = ''
         db(db.filters.id == filter_id).update(status=1)
@@ -319,7 +331,16 @@ def proc_del_filter():
     filter_id_list = request.vars['filter[]']
 
     try:
-        for filter_id in filter_id_list:
+        if isinstance(filter_id_list, list):
+            for filter_id in filter_id_list:
+                db(db.filters.id == filter_id).delete()
+                db(db.input_port.filter_id==filter_id).delete()
+                db(db.input_rules.filter_id==filter_id).delete()
+                db(db.output_rules.filter_id==filter_id).delete()
+                db(db.out_port.filter_id==filter_id).delete()
+                db(db.out_policy.filter_id==filter_id).delete()
+        else:
+            filter_id = filter_id_list
             db(db.filters.id == filter_id).delete()
             db(db.input_port.filter_id==filter_id).delete()
             db(db.input_rules.filter_id==filter_id).delete()

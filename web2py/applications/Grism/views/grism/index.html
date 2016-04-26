@@ -53,7 +53,8 @@
                 </div>
             </form>
             <address>
-                <strong>PacketX Technology, Inc.</strong><br/> 14F.-6, No.490, Jingping Rd., Zhonghe Dist., New Taipei City <br/> 23582, Taiwan (R.O.C.)<br/>
+                <strong>PacketX Technology, Inc.</strong><br/> 14F.-6, No.490, Jingping Rd., Zhonghe Dist., New Taipei
+                City <br/> 23582, Taiwan (R.O.C.)<br/>
                 <abbr title="Phone">P:</abbr> 02-22486718
             </address>
         </div>
@@ -88,6 +89,21 @@
         });
     };
 
+    $("input").keyup(function (e) {
+        var key;
+        e.preventDefault();
+        if (e && e.which) {
+            key = e.which;
+        } else if (window.event) {
+            e = window.event;
+            key = e.keyCode;
+        }
+
+        if (key == 13)  // the enter key code
+        {
+            return proc_login()
+        }
+    });
 </script>
 
 </body>
