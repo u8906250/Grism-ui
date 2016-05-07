@@ -425,19 +425,29 @@
 
                                 <td>
                                     <table class="table">
-                                    {{ for key, value in filter_item['out_policy'].iteritems():}}
+                                        <thead>
+                                        <tr>
+                                            <th>out rules</th>
+                                            <th>out ports</th>
+                                            <th>post-service</th>
+                                            <th>out type</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {{ for key, value in filter_item['out_policy'].iteritems():}}
                                         <tr>
                                             <td>
                                             {{ for rule_value in value['out_rule']:}}
                                             {{=rule_value}}<br>
                                             {{pass}}
                                             </td>
-                                            <td>
+
                                             <td>
                                             {{ for port_key, port_value in value['out_port'].iteritems():}}
                                             {{=port_key}}<br>
                                             {{pass}}
                                             </td>
+
                                             <td>
                                             {{ for port_key, port_value in value['out_port'].iteritems():}}
                                             {{=port_value}}<br>
@@ -445,7 +455,8 @@
                                             </td>
                                             <td>{{=value['out_type']}}</td>
                                         </tr>
-                                    {{pass}}
+                                        {{pass}}
+                                        </tbody>
                                     </table>
                                 </td>
 
@@ -503,24 +514,28 @@
         })
     };
 
+    var check_press = 0
     var is_checked = {}
     $('#filter_chains .panel-heading table td').on('click', function () {
-        var ref = $(this).closest('tbody').find('a').attr('href')
-        if (is_checked[ref] == 0 || typeof (is_checked[ref]) === 'undefined') {
-            $(ref).collapse("toggle");
+
+        if (check_press == 1) {
+            check_press = 0
+            return
         }
+        var ref = $(this).closest('tbody').find('a').attr('href')
+        $(ref).collapse("toggle");
+//        if (is_checked[ref] == 0 || typeof (is_checked[ref]) === 'undefined') {
+//            $(ref).collapse("toggle");
+//        }
     })
 
-    //    $('#filter_chains .panel-heading table td ')
-
     $('#filter_chains .filter_checkbox').click(function () {
+        check_press = 1
         var ref = $(this).closest('tbody').find('a').attr('href')
         if ($(this).prop("checked")) {
-            $(ref).collapse("show");
             is_checked[ref] = 1
         }
         else {
-            $(ref).collapse("hide");
             is_checked[ref] = 0
         }
     })
@@ -742,13 +757,13 @@
         else if (id == 'filter_out_rules') {
             title = 'Out Rules'
         }
-        else if (id == 'filter_out'){
+        else if (id == 'filter_out') {
             title = 'Out Ports'
         }
-        else if (id == 'out_policy'){
+        else if (id == 'out_policy') {
             title = 'New Out Rules and Ports'
         }
-        else if (id == 'inport_setting'){
+        else if (id == 'inport_setting') {
             title = 'New In Port'
         }
 
@@ -878,7 +893,7 @@
         if (out_type == 2) {
             out_type_balance = 'loadbalance:' + $('#out_rule').text()
         }
-        else{
+        else {
             out_type_balance = 'duplicate'
         }
 
