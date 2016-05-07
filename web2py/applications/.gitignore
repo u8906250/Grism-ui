@@ -1,0 +1,9 @@
+Grism/models/settings.py
+Grism/errors/*
+Grism/databases/*
+Grism/sessions/*
+/applications/httpserver.log
+/applications/httpserver.pid
+/applications/parameters_8000.py
+*.pyc
+.idea/*
