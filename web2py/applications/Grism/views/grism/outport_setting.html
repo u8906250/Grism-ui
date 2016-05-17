@@ -49,12 +49,21 @@
                        class="form-control" id="packet" style="width: 100px"></div>
         </form>
     </div>
-
-    <div class="checkbox disabled">
-        <label><input type="checkbox" value="6">encapsulation</label>
+    <div id="dir_setting" style="display: none" class="checkbox disabled">
+        <form class="form-inline">
+            <div class="form-group"><label><input type="checkbox" value="5">directory (bytes)</label></div>
+            <div class="form-group">
+                <input type="text"
+                       class="form-control" id="directory" style="width: 100px"></div>
+        </form>
     </div>
 
     <div id="out_setting" style="display: none">
+
+        <div class="checkbox disabled">
+            <label><input type="checkbox" value="6">encapsulation</label>
+        </div>
+
         <label class="radio-inline"><input id="UDP" type="radio" name="type_status" checked="checked"
                                            value="UDP">UDP</label>
         <label class="radio-inline"><input id="NVGRE" type="radio" name="type_status" value="NVGRE">NVGRE</label>

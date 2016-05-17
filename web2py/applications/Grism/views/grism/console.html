@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Bootstrap 3, from LayoutIt!</title>
+    <title>Grism</title>
 
     <meta name="description" content="Source code generated using layoutit.com">
     <meta name="author" content="LayoutIt!">
@@ -251,7 +251,7 @@
                                     </button>
 
                                     <button type="button" class="btn btn-primary btn-sm pull-right"
-                                            onclick="show_setting('filter_in_rules')">
+                                            onclick="show_setting('out_policy')">
                                         back
                                     </button>
 
@@ -544,13 +544,6 @@
         $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
         $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
 
-        if ($(this).text() == 'H1') {
-            $("#dir_setting").show();
-        }
-        else {
-            $("#dir_setting").hide()
-            $("#dir_setting :input:checkbox").attr("checked", false);
-        }
 
         if ($(this).parents(".dropdown").closest('div[id]').attr('id') == 'outport_setting') {
             if ($(this).text() == 'P7') {
@@ -558,6 +551,14 @@
             }
             else {
                 $("#out_setting").hide();
+            }
+
+            if ($(this).text() == 'H1') {
+                $("#dir_setting").show();
+            }
+            else {
+                $("#dir_setting").hide()
+                $("#dir_setting :input:checkbox").attr("checked", false);
             }
         }
 
@@ -922,14 +923,17 @@
                     var res = $(this).closest('label').text();
                     if (res == 'vlan tagging') {
                         res = res.toString() + ':' + $('#' + id + " #vlan_tag").val()
+                        $('#' + id + " #vlan_tag").val('')
                     }
 
                     if (res == 'packet stripping') {
                         res = res.toString() + ':' + $('#' + id + " #packet").val()
+                        $('#' + id + " #packet").val('')
                     }
 
                     if (res == 'directory (bytes)') {
                         res = res.toString() + ':' + $('#' + id + " #directory").val()
+                        $('#' + id + " #directory").val('')
                     }
 
                     list.push(res)
@@ -942,11 +946,19 @@
                     var res = $(this).closest('label').text();
                     if (res == 'vlan tagging') {
                         res = res.toString() + ':' + $('#' + id + " #vlan_tag").val()
+                        $('#' + id + " #vlan_tag").val('')
                     }
 
                     if (res == 'packet stripping') {
                         res = res.toString() + ':' + $('#' + id + " #packet").val()
+                        $('#' + id + " #packet").val('')
                     }
+
+                    if (res == 'directory (bytes)') {
+                        res = res.toString() + ':' + $('#' + id + " #directory").val()
+                        $('#' + id + " #directory").val('')
+                    }
+
                     list.push(res)
                 }
             });

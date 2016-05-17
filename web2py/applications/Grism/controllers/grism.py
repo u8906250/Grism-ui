@@ -1,5 +1,7 @@
 __author__ = 'xuanlin'
 
+import logging
+
 def index():
     return response.render('grism/index.html')
 
@@ -142,7 +144,10 @@ def proc_export_setting():
 
             for setting in setting_list.split('\\\\'):
                 port = setting.split(' ', 1)[0]
-                service = setting.split(' ', 1)[1]
+                if setting.split(' ', 1).__len__() > 1:
+                    service = setting.split(' ', 1)[1]
+                else:
+                    service = ''
                 db.out_port.insert(filter_id=filter_id,
                                    policy_id=policy_id,
                                    out_port=port,
@@ -150,21 +155,22 @@ def proc_export_setting():
                                    out_type=out_type)
 
             for rule in rule_list.split('\\'):
-                if rule.find('==') > 0:
-                    name = rule.split('==')[0]
-                    relation = '=='
-                    rule_content = rule.split('==')[1]
-                else:
-                    name = rule.split('!=')[0]
-                    relation = '!='
-                    rule_content = rule.split('!=')[1]
+                if rule:
+                    if rule.find('==') > 0:
+                        name = rule.split('==')[0]
+                        relation = '=='
+                        rule_content = rule.split('==')[1]
+                    else:
+                        name = rule.split('!=')[0]
+                        relation = '!='
+                        rule_content = rule.split('!=')[1]
 
-                db.output_rules.insert(filter_id=filter_id,
-                                       policy_id=policy_id,
-                                       name=name,
-                                       relation=relation,
-                                       rule_relation=rule_relation,
-                                       rule_content=rule_content)
+                    db.output_rules.insert(filter_id=filter_id,
+                                           policy_id=policy_id,
+                                           name=name,
+                                           relation=relation,
+                                           rule_relation=rule_relation,
+                                           rule_content=rule_content)
 
         return response.json({'error': 0, 'message': err_msg})
     except Exception as e:
@@ -260,6 +266,8 @@ def proc_generate_setting():
                     ET.SubElement(output, "maxlen").text = service.split(':')[1]
                 elif service.find('UDP') >= 0 :
                     is_udp = True
+                elif service.find('directory (bytes)') >=0:
+                    ET.SubElement(output, "dir").text = service.split(':')[1]
                 elif service.find('destination port') >= 0:
                     if is_udp:
                         ET.SubElement(output, "dip").text = service.split(':')[1]
