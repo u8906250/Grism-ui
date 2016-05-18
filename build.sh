@@ -22,6 +22,8 @@ cp -R web2py/applications/Grism/static $GRISM_LGUI_APP_PATH
 cp -R web2py/applications/Grism/private $GRISM_LGUI_APP_PATH
 cp -R web2py/applications/Grism/views/grism $GRISM_LGUI_APP_PATH/views
 
+find $DEPLOYMENT_PATH -type f -name '*.pyc' -exec rm {} +
+
 #cp -R web2py/applications/admin $GRISM_LGUI_PATH/applications
 #cp web2py/server.* $GRISM_LGUI_PATH
 
