@@ -1,0 +1,10 @@
+# Created by .ignore support plugin (hsz.mobi)
+applications/Grism/models/settings.py
+applications/Grism/errors/*
+applications/Grism/databases/*
+applications/Grism/sessions/*
+applications/httpserver.log
+applications/httpserver.pid
+applications/parameters_8000.py
+*.pyc
+.idea/*
