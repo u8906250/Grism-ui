@@ -51,11 +51,13 @@ find
 | udp.srcport   | udp src port    | 123                                    | 2-bytes integer |
 | udp.dstport   | udp dst port    | 123                                    | 2-bytes integer |
 | 5-tuple       | 5-tuple         | 74.125.204.10 192.168.1.203 33433 80 6 | string          |
+| gre           | gre protocol    |                                        |                 |
+| erspan.spanid | erspan spanid   | 100                                    | 3-bytes integer |
 | regex         | regular express | \b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{3} | string          |
 | voip          | voice over ip   |                                        |                 |
 | voip.account  | voip account    | 92663366@o.gentrice.net                | string          |
-| voip.account  | voip from       | 92663366@o.gentrice.net                | string          |
-| voip.account  | voip to         | 92663366@o.gentrice.net                | string          |
+| voip.from     | voip from       | 92663366@o.gentrice.net                | string          |
+| voip.to       | voip to         | 92663366@o.gentrice.net                | string          |
 
 IP Format example
 * 192.168.1.150
