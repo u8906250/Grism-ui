@@ -357,8 +357,11 @@ def proc_generate_setting():
     et.write(f, encoding='utf-8', xml_declaration=True)
     print(f.getvalue())
 
-    with open(_OUTPUT_DIR + '/' + session.user_name + '.xml', 'w') as file:
+    with open(_OUTPUT_DIR + '/run.xml', 'w') as file:
         file.write(f.getvalue())
+
+    from shutil import copyfile
+    copyfile(_OUTPUT_DIR + '/run.xml', _OUTPUT_DIR + '/run.xml.ok')
 
     return response.json({'error': 0, 'message': err_msg, 'content': f.getvalue()})
 
