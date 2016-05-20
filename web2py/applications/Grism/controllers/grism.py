@@ -218,6 +218,9 @@ def proc_generate_setting():
                         ET.SubElement(action, "stripping").text = 'payload'
                     elif service.find('packet') >= 0:
                         ET.SubElement(action, "maxlen").text = service.split(':')[1]
+            else:
+                action = ET.SubElement(root, 'action', type="input-packet-process", id=str(port['id']), name=str(port['id']))
+                ET.SubElement(action, "port").text = port['in_port']
 
         if in_rules:
             in_filter = ET.SubElement(root, 'filter', id=str(idx), name=str(idx))
