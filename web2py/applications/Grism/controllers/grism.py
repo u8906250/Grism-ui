@@ -232,17 +232,19 @@ def proc_generate_setting():
             in_rule_idx = idx
             idx += 1
 
-        if out_rules:
+        if out_policy:
             for policy in out_policy:
                 out_rule_idx_list[policy['id']] = list()
                 out_filter = ET.SubElement(root, 'filter', id=str(idx), name=str(idx))
                 out_rules = db(db.output_rules.policy_id==policy['id']).select(db.output_rules.ALL)
-                rule_relation = db(db.output_rules.policy_id==policy['id']).select().first()['rule_relation']
-                status = ET.SubElement(out_filter, rule_relation)
+                rule_relation = db(db.output_rules.policy_id==policy['id']).select().first()
+                if rule_relation:
+                    rule_relation = rule_relation['rule_relation']
+                    status = ET.SubElement(out_filter, rule_relation)
                 for rule in out_rules:
                     ET.SubElement(status, "find", name=rule['name'].strip(), relation=rule['relation'].strip(), content=rule['rule_content'].strip())
-                out_rule_idx_list[policy['id']].append(idx)
-                idx += 1
+                    out_rule_idx_list[policy['id']].append(idx)
+                    idx += 1
         else:
             ET.SubElement(root, 'filter', id=str(idx), name=str(idx))
             out_rule_idx_list[0] = list()
@@ -266,7 +268,7 @@ def proc_generate_setting():
                     ET.SubElement(output, "maxlen").text = service.split(':')[1]
                 elif service.find('UDP') >= 0 :
                     is_udp = True
-                elif service.find('directory (bytes)') >=0:
+                elif service.find('directory') >=0:
                     ET.SubElement(output, "dir").text = service.split(':')[1]
                 elif service.find('destination port') >= 0:
                     if is_udp:
@@ -296,9 +298,32 @@ def proc_generate_setting():
 
         for policy in out_policy:
             next = ET.SubElement(chain, 'next')
-            for out_rule_idx in out_rule_idx_list[policy['id']]:
-                ET.SubElement(next, "fid").text = 'F' + str(out_rule_idx)
+            if out_rule_idx_list[policy['id']]:
+                for out_rule_idx in out_rule_idx_list[policy['id']]:
+                    ET.SubElement(next, "fid").text = 'F' + str(out_rule_idx)
 
+                    out_type = ''
+                    out_ports = db(db.out_port.policy_id==policy['id']).select(db.out_port.ALL)
+
+                    for port in out_ports:
+                        out_type = port['out_type']
+                        if chain_out_port == '':
+                            chain_out_port = 'O' + str(port['id'])
+                        else:
+                            chain_out_port += ',' + 'O' + str(port['id'])
+
+                    if out_type == '':
+                        out_type = 'duplicate'
+
+                    if out_type == 'duplicate':
+                        ET.SubElement(next, "out", type=out_type).text = chain_out_port
+                    else:
+                        if 'loadbalance' in out_type:
+                            out_type=out_type.split(':')[1]
+
+                        ET.SubElement(next, "out", type='loadBalance', lbtype=out_type).text = chain_out_port
+                    chain_out_port = ''
+            else:
                 out_type = ''
                 out_ports = db(db.out_port.policy_id==policy['id']).select(db.out_port.ALL)
 
@@ -320,6 +345,7 @@ def proc_generate_setting():
 
                     ET.SubElement(next, "out", type='loadBalance', lbtype=out_type).text = chain_out_port
                 chain_out_port = ''
+
         db(db.filters.id == filter_id).update(status=1)
 
     et = ET.ElementTree(root)
