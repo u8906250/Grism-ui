@@ -283,8 +283,6 @@ def proc_generate_setting():
                         ET.SubElement(output, "sport").text = service.split(':')[1]
                     elif service.find('destination port') >= 0:
                         ET.SubElement(output, "dport").text = service.split(':')[1]
-            else:
-                ET.SubElement(root, 'out').text = port['out_port']
 
 
         chain = ET.SubElement(root, 'chain', id=filter_id, name=filter_id)
