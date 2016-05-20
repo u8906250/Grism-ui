@@ -255,33 +255,36 @@ def proc_generate_setting():
             idx += 1
 
         for port in out_ports:
-            output = ET.SubElement(root, 'output', id=str(port['id']), name=str(port['id']), type="mix")
-            is_udp = False
-            ET.SubElement(output, "port").text = port['out_port']
-            for service in port['post_service'].split('\\'):
-                if service.find('vlan tagging') >= 0:
-                    ET.SubElement(output, "Q", type='add').text = service.split(':')[1]
-                elif service.find('vlan stripping') >= 0:
-                    ET.SubElement(output, "stripping").text = 'vlan'
-                elif service.find('mpls stripping') >= 0:
-                    ET.SubElement(output, "stripping").text = 'mpls'
-                elif service.find('TCP/UDP') >= 0:
-                    ET.SubElement(output, "stripping").text = 'payload'
-                elif service.find('packet') >= 0:
-                    ET.SubElement(output, "maxlen").text = service.split(':')[1]
-                elif service.find('UDP') >= 0 :
-                    is_udp = True
-                elif service.find('directory') >=0:
-                    ET.SubElement(output, "dir").text = service.split(':')[1]
-                elif service.find('destination port') >= 0:
-                    if is_udp:
-                        ET.SubElement(output, "dip").text = service.split(':')[1]
-                    else:
-                        ET.SubElement(output, "nvgre_dip").text = service.split(':')[1]
-                elif service.find('source port') >= 0:
-                    ET.SubElement(output, "sport").text = service.split(':')[1]
-                elif service.find('destination port') >= 0:
-                    ET.SubElement(output, "dport").text = service.split(':')[1]
+            if port['post_service']:
+                output = ET.SubElement(root, 'output', id=str(port['id']), name=str(port['id']), type="mix")
+                is_udp = False
+                ET.SubElement(output, "port").text = port['out_port']
+                for service in port['post_service'].split('\\'):
+                    if service.find('vlan tagging') >= 0:
+                        ET.SubElement(output, "Q", type='add').text = service.split(':')[1]
+                    elif service.find('vlan stripping') >= 0:
+                        ET.SubElement(output, "stripping").text = 'vlan'
+                    elif service.find('mpls stripping') >= 0:
+                        ET.SubElement(output, "stripping").text = 'mpls'
+                    elif service.find('TCP/UDP') >= 0:
+                        ET.SubElement(output, "stripping").text = 'payload'
+                    elif service.find('packet') >= 0:
+                        ET.SubElement(output, "maxlen").text = service.split(':')[1]
+                    elif service.find('UDP') >= 0 :
+                        is_udp = True
+                    elif service.find('directory') >=0:
+                        ET.SubElement(output, "dir").text = service.split(':')[1]
+                    elif service.find('destination port') >= 0:
+                        if is_udp:
+                            ET.SubElement(output, "dip").text = service.split(':')[1]
+                        else:
+                            ET.SubElement(output, "nvgre_dip").text = service.split(':')[1]
+                    elif service.find('source port') >= 0:
+                        ET.SubElement(output, "sport").text = service.split(':')[1]
+                    elif service.find('destination port') >= 0:
+                        ET.SubElement(output, "dport").text = service.split(':')[1]
+            else:
+                ET.SubElement(root, 'out').text = port['out_port']
 
 
         chain = ET.SubElement(root, 'chain', id=filter_id, name=filter_id)
