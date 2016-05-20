@@ -661,6 +661,14 @@
         $('#filter_in_rules').show()
         $('#filter_out_rules').show()
 
+        if ($('#out_policy_table > tbody').children('tr').length == 0){
+            $('#filter_in').hide()
+            $('#filter_in_rules').hide()
+            $('#filter_out_rules').hide()
+            alert('Please select policy')
+            return
+        }
+
         var inport_table = $('#inport_table').tableToJSON();
         var in_rule_table = $('#in_rule_table').tableToJSON();
 
