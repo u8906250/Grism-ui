@@ -334,9 +334,9 @@ def proc_generate_setting():
                 for port in out_ports:
                     out_type = port['out_type']
                     if chain_out_port == '':
-                        chain_out_port = 'O' + str(port['id'])
+                        chain_out_port = str(port['out_port'])
                     else:
-                        chain_out_port += ',' + 'O' + str(port['id'])
+                        chain_out_port += ',' + str(port['out_port'])
 
                 if out_type == '':
                     out_type = 'duplicate'
