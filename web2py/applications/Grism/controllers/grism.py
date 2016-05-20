@@ -311,10 +311,11 @@ def proc_generate_setting():
 
                     for port in out_ports:
                         out_type = port['out_type']
+                        out_port_val = 'O' + str(port['id']) if port['post_service'] else port['out_port']
                         if chain_out_port == '':
-                            chain_out_port = 'O' + str(port['id'])
+                            chain_out_port = out_port_val
                         else:
-                            chain_out_port += ',' + 'O' + str(port['id'])
+                            chain_out_port += ',' + out_port_val
 
                     if out_type == '':
                         out_type = 'duplicate'
@@ -333,10 +334,11 @@ def proc_generate_setting():
 
                 for port in out_ports:
                     out_type = port['out_type']
+                    out_port_val = 'O' + str(port['id']) if port['post_service'] else port['out_port']
                     if chain_out_port == '':
-                        chain_out_port = str(port['out_port'])
+                        chain_out_port = out_port_val
                     else:
-                        chain_out_port += ',' + str(port['out_port'])
+                        chain_out_port += ',' + out_port_val
 
                 if out_type == '':
                     out_type = 'duplicate'
